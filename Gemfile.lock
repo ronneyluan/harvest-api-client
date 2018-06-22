@@ -7,6 +7,9 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.3)
+    httparty (0.16.2)
+      multi_xml (>= 0.5.2)
+    multi_xml (0.6.0)
     rake (10.5.0)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
@@ -28,6 +31,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.16)
   harvest-api-client!
+  httparty (~> 0.16.2)
   rake (~> 10.0)
   rspec (~> 3.0)
 
