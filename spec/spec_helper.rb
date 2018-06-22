@@ -2,6 +2,7 @@ require "bundler/setup"
 require "harvest/api/client"
 require "dotenv"
 require "vcr"
+require "time"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -17,7 +18,7 @@ RSpec.configure do |config|
   config.before(:suite) do
     Dotenv.load('.env')
 
-    Harvest::Api.setup do |config|
+    Harvest::Api::Client.setup do |config|
       config.harvest_access_token = ENV['HARVEST_ACCESS_TOKEN']
       config.harvest_account_id = ENV['HARVEST_ACCOUNT_ID']
     end

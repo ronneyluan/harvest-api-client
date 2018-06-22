@@ -19,6 +19,7 @@ module Harvest
       class UnprocessableEntityError < HttpClientError; end
       class ThrottledRequestError < HttpClientError; end
       class ServerError < HttpClientError; end
+      class UnknownError < HttpClientError; end
     end
   end
 end

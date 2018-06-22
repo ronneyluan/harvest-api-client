@@ -9,9 +9,10 @@ module Harvest
           @account_id = account_id
         end
 
-        def get(path, options: {})
+        def get(path, options: {}, &block)
           response = perform_request(:get, path, options: options)
-          yield handle_response(response)
+          parsed_response = handle_response(response)
+          block ? block.call(parsed_response) : parsed_response
         end
 
         protected
@@ -45,7 +46,7 @@ module Harvest
         def handle_response(response)
           case response.code
           when 200..201
-            response.body
+            JSON.parse(response.body)
           when 403
             raise ERRORS_NAMESPACE::UnauthorizedError.new(response.code,
               "The object you requested was found but you don’t have authorization to perform this request.")
