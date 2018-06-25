@@ -15,6 +15,22 @@ module Harvest
           block ? block.call(parsed_response) : parsed_response
         end
 
+        def get_collection(path, options: {}, &block)
+          pages = []
+          page = perform_request(:get, path, options: options)
+          pages.push(handle_response(page))
+
+          while page['page'] < page['total_pages']
+            page = perform_request(:get, path, options: options)
+            pages.push(handle_response(page))
+          end
+
+          pages.reduce([]) do |acc, page|
+            acc += block ? block.call(page) : page
+            acc
+          end
+        end
+
         protected
 
         BASE_URI = 'https://api.harvestapp.com/v2'
