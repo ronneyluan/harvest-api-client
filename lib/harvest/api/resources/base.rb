@@ -7,7 +7,7 @@ module Harvest
         def initialize(access_token:, account_id: nil)
           @access_token = access_token
           @account_id = account_id
-          @options = {}
+          @options = { query: {} }
         end
 
         def get(path, options: {}, &block)
@@ -33,6 +33,11 @@ module Harvest
             acc += block ? block.call(page) : page
             acc
           end
+        end
+
+        def where(**query_options)
+          @options[:query].merge!(query_options)
+          self
         end
 
         protected

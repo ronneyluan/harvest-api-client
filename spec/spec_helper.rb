@@ -3,6 +3,7 @@ require "harvest/api/client"
 require "dotenv"
 require "vcr"
 require "time"
+require "date"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

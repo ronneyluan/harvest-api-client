@@ -74,4 +74,24 @@ RSpec.describe Harvest::Api::Resources::TimeEntries do
       end
     end
   end
+
+  describe "#in_period" do
+    let(:to) { Date.today }
+    let(:from) { to - 10 }
+
+    it "returns the same object as response" do
+      expect(subject.in_period(from, to)).to eq(subject)
+    end
+
+    it "adds the period to the request query before performing it" do
+      options = { query: { from: from, to: to, page: 1, per_page: 100 } }
+
+      expect(subject).to receive(:get_collection).
+        with('/time_entries', options: options).and_call_original
+
+      VCR.use_cassette('time_entries/in_period') do
+        subject.in_period(from, to).all
+      end
+    end
+  end
 end
