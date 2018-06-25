@@ -24,7 +24,7 @@ RSpec.describe Harvest::Api::Resources::Users do
       end
     end
 
-    context 'when the a page is passed as parameter' do
+    context 'when a page is passed as parameter' do
       it 'adds the given page to request query' do
         options = { options: { query: { page: 1, per_page: 100 } } }
 
@@ -82,7 +82,7 @@ RSpec.describe Harvest::Api::Resources::Users do
     end
 
     context "when the user is not found" do
-      it "raises a no found error" do
+      it "raises a not found error" do
         VCR.use_cassette('users/not_found') do
           expect {
             subject.find('0')

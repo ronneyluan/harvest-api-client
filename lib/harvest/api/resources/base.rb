@@ -7,12 +7,32 @@ module Harvest
         def initialize(access_token:, account_id: nil)
           @access_token = access_token
           @account_id = account_id
+          @options = {}
         end
 
         def get(path, options: {}, &block)
           response = perform_request(:get, path, options: options)
           parsed_response = handle_response(response)
           block ? block.call(parsed_response) : parsed_response
+        end
+
+        def get_collection(path, options: {}, &block)
+          pages = []
+          response = perform_request(:get, path, options: options)
+          page = handle_response(response)
+          pages.push(page)
+
+          while page['page'] < page['total_pages']
+            options[:query][:page] = page['next_page']
+            response = perform_request(:get, path, options: options)
+            page = handle_response(response)
+            pages.push(page)
+          end
+
+          pages.reduce([]) do |acc, page|
+            acc += block ? block.call(page) : page
+            acc
+          end
         end
 
         protected
