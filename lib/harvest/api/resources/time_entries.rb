@@ -16,8 +16,8 @@ module Harvest
           get("#{TIME_ENTRIES_PATH}/#{id}")
         end
 
-        def in_period(from_date, to_date)
-          where(from: from_date, to: to_date)
+        def in_period(from, to)
+          where(from: from, to: to)
         end
       end
     end
