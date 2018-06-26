@@ -30,7 +30,7 @@ module Harvest
           end
 
           pages.reduce([]) do |acc, page|
-            acc += block ? block.call(page) : page
+            acc += block ? block.call(page) : [page]
             acc
           end
         end
@@ -51,7 +51,6 @@ module Harvest
 
         def default_headers
           headers = {
-            'Harvest-Account-ID' => @account_id,
             'Authorization' => "Bearer #{@access_token}",
             'User-Agent' => 'Harvest API Client (ronneyluan@gmail.com)'
           }
