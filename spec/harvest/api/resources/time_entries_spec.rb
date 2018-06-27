@@ -76,7 +76,7 @@ RSpec.describe Harvest::Api::Resources::TimeEntries do
   end
 
   describe "#in_period" do
-    let(:to) { Date.today }
+    let(:to) { Date.parse('2018-06-26') }
     let(:from) { to - 10 }
 
     it "returns the same object as response" do

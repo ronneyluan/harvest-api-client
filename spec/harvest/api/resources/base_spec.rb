@@ -1,9 +1,11 @@
 require  "harvest/api/resources/shared/request_errors"
 
 RSpec.describe Harvest::Api::Resources::Base do
+  let(:access_token) { Harvest::Api::Client.config.harvest_access_token }
+  let(:account_id) { Harvest::Api::Client.config.harvest_account_id }
+
   subject do
-    described_class.new(access_token: Harvest::Api::Client.config.harvest_access_token,
-      account_id: Harvest::Api::Client.config.harvest_account_id)
+    described_class.new(access_token: access_token, account_id: account_id)
   end
 
   describe "#get" do
@@ -59,15 +61,13 @@ RSpec.describe Harvest::Api::Resources::Base do
     end
 
     context "when there is more than one page for the requested resource" do
-      let(:first_page_response) do
-        double(
-          'HTTPartyResponse',
-          body: { 'page' => 1, 'total_pages' => 2, 'next_page' => 2 }
-        )
-      end
+      it "performs a request for each page" do
+        expect(HTTParty).to receive(:get).twice.and_call_original
 
-      before do
-        allow(HTTParty).to receive(:get).and_return
+        VCR.use_cassette('time_entries/per_page_1') do
+          options = { query: { page: 1, per_page: 1 } }
+          subject.get_collection('/time_entries', options: options)
+        end
       end
     end
 

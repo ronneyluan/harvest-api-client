@@ -22,7 +22,7 @@ module Harvest
           page = handle_response(response)
           pages.push(page)
 
-          while page['page'] < page['total_pages']
+          while page['next_page']
             options[:query][:page] = page['next_page']
             response = perform_request(:get, path, options: options)
             page = handle_response(response)
