@@ -5,7 +5,7 @@ module Harvest
         ACCOUNTS_PATH = '/accounts'
 
         def all
-          get_collection(ACCOUNTS_PATH) do |user_accounts|
+          get(ACCOUNTS_PATH) do |user_accounts|
             user_accounts['accounts']
           end
         end
