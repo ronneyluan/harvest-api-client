@@ -73,7 +73,7 @@ module Harvest
         def find_account_id
           accounts = Resources::Accounts.new(access_token: @access_token).all
           harvest_account = accounts.find { |a| a["product"] == "harvest" }
-          harvest_account.fetch("id") rescue nil
+          harvest_account.fetch("id").to_s rescue nil
         end
 
         def handle_response(response)
