@@ -17,6 +17,15 @@ module Harvest
           account_id: config.harvest_account_id)
       end
 
+      def time_entries
+        Resources::TimeEntries.new(access_token: config.harvest_access_token,
+          account_id: config.harvest_account_id)
+      end
+
+      def accounts
+        Resources::Accounts.new(access_token: config.harvest_access_token)
+      end
+
       class << self
         def setup
           @@config = OpenStruct.new
