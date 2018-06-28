@@ -13,17 +13,17 @@ module Harvest
       TIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
 
       def users
-        Resources::Users.new(access_token: harvest_access_token,
+        Api::Resources::Users.new(access_token: harvest_access_token,
           account_id: harvest_account_id)
       end
 
       def time_entries
-        Resources::TimeEntries.new(access_token: harvest_access_token,
+        Api::Resources::TimeEntries.new(access_token: harvest_access_token,
           account_id: harvest_account_id)
       end
 
       def accounts
-        Resources::Accounts.new(access_token: harvest_access_token)
+        Api::Resources::Accounts.new(access_token: harvest_access_token)
       end
 
       protected
