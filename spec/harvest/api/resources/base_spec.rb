@@ -1,11 +1,20 @@
 require  "harvest/api/resources/shared/request_errors"
 
 RSpec.describe Harvest::Api::Resources::Base do
-  let(:access_token) { Harvest::Api::Client.config.harvest_access_token }
-  let(:account_id) { Harvest::Api::Client.config.harvest_account_id }
-
   subject do
-    described_class.new(access_token: access_token, account_id: account_id)
+    described_class.new(access_token: ENV['HARVEST_ACCESS_TOKEN'],
+      account_id: ENV['HARVEST_ACCOUNT_ID'])
+  end
+
+  context "when no account_id is passed" do
+    it "fetches a account_id for the given access token" do
+      expect_any_instance_of(Harvest::Api::Resources::Accounts).to receive(:all).
+        and_call_original
+
+      VCR.use_cassette('accounts/all') do
+        described_class.new(access_token: ENV['HARVEST_USER_ACCESS_TOKEN'])
+      end
+    end
   end
 
   describe "#get" do

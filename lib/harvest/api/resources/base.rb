@@ -6,7 +6,7 @@ module Harvest
       class Base
         def initialize(access_token:, account_id: nil)
           @access_token = access_token
-          @account_id = account_id
+          @account_id = account_id || find_account_id
           @options = { query: {} }
         end
 
@@ -70,6 +70,12 @@ module Harvest
           }
         end
 
+        def find_account_id
+          accounts = Resources::Accounts.new(access_token: @access_token).all
+          harvest_account = accounts.find { |a| a["product"] == "harvest" }
+          harvest_account.fetch("id") rescue nil
+        end
+
         def handle_response(response)
           case response.code
           when 200..201
@@ -77,6 +83,9 @@ module Harvest
           when 403
             raise ERRORS_NAMESPACE::UnauthorizedError.new(response.code,
               "The object you requested was found but you don’t have authorization to perform this request.")
+          when 401
+            raise ERRORS_NAMESPACE::InvalidTokenError.new(response.code,
+              "The Access token is invalid.")
           when 404
             raise ERRORS_NAMESPACE::NotFoundError.new(response.code,
               "The object you requested can’t be found.")

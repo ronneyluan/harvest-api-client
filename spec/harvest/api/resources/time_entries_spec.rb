@@ -1,7 +1,7 @@
 RSpec.describe Harvest::Api::Resources::TimeEntries do
   subject do
-    described_class.new(access_token: Harvest::Api::Client.config.harvest_access_token,
-      account_id: Harvest::Api::Client.config.harvest_account_id)
+    described_class.new(access_token: ENV['HARVEST_ACCESS_TOKEN'],
+      account_id: ENV['HARVEST_ACCOUNT_ID'])
   end
 
   let(:time_entry_attributes) do

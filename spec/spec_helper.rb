@@ -19,11 +19,6 @@ RSpec.configure do |config|
   config.before(:suite) do
     Dotenv.load('.env')
 
-    Harvest::Api::Client.setup do |config|
-      config.harvest_access_token = ENV['HARVEST_ACCESS_TOKEN']
-      config.harvest_account_id = ENV['HARVEST_ACCOUNT_ID']
-    end
-
     VCR.configure do |config|
       config.cassette_library_dir = "spec/vcr_cassettes"
       config.hook_into :webmock

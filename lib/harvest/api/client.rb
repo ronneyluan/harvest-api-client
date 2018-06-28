@@ -13,31 +13,23 @@ module Harvest
       TIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
 
       def users
-        Resources::Users.new(access_token: config.harvest_access_token,
-          account_id: config.harvest_account_id)
+        Resources::Users.new(access_token: harvest_access_token,
+          account_id: harvest_account_id)
       end
 
       def time_entries
-        Resources::TimeEntries.new(access_token: config.harvest_access_token,
-          account_id: config.harvest_account_id)
+        Resources::TimeEntries.new(access_token: harvest_access_token,
+          account_id: harvest_account_id)
       end
 
       def accounts
-        Resources::Accounts.new(access_token: config.harvest_access_token)
+        Resources::Accounts.new(access_token: harvest_access_token)
       end
 
-      class << self
-        def setup
-          @@config = OpenStruct.new
-          yield(@@config)
-        end
+      protected
 
-        def config
-          raise Errors::ConfigError if @@config.harvest_access_token.nil?
-
-          @@config
-        end
-      end
+      def harvest_access_token; end
+      def harvest_account_id; end
     end
   end
 end

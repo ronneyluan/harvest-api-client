@@ -1,13 +1,6 @@
 RSpec.describe Harvest::Api::Resources::Accounts do
-  before do
-    Harvest::Api::Client.setup do |config|
-      config.harvest_access_token = ENV['ACCOUNT_HARVEST_ACCESS_TOKEN']
-    end
-  end
-
   subject do
-    described_class.new(
-      access_token: Harvest::Api::Client.config.harvest_access_token)
+    described_class.new(access_token: ENV['HARVEST_USER_ACCESS_TOKEN'])
   end
 
   describe "#all" do
