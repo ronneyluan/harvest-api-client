@@ -42,10 +42,13 @@ module Harvest
 
         protected
 
-        BASE_URI = 'https://api.harvestapp.com/v2'
         ERRORS_NAMESPACE = Harvest::Api::Errors
 
-        def perform_request(method, path, options: {}, base_uri: BASE_URI)
+        def base_uri
+          'https://api.harvestapp.com/v2'
+        end
+
+        def perform_request(method, path, options: {})
           HTTParty.send(method, "#{base_uri}#{path}", request_options(options))
         end
 
