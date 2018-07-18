@@ -2,8 +2,6 @@ module Harvest
   module Api
     module Resources
       class Accounts < Base
-        ACCOUNTS_PATH = '/accounts'
-
         def initialize(access_token:)
           @access_token = access_token
         end
@@ -15,6 +13,8 @@ module Harvest
         end
 
         protected
+
+        ACCOUNTS_PATH = '/accounts'
 
         def base_uri
           'https://id.getharvest.com/api/v2'
