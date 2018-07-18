@@ -7,6 +7,7 @@ require "harvest/api/resources/base"
 require "harvest/api/resources/users"
 require "harvest/api/resources/time_entries"
 require "harvest/api/resources/accounts"
+require "harvest/api/resources/projects"
 
 module Harvest
   module Api
