@@ -8,6 +8,7 @@ require "harvest/api/resources/users"
 require "harvest/api/resources/time_entries"
 require "harvest/api/resources/accounts"
 require "harvest/api/resources/projects"
+require "harvest/api/resources/clients"
 
 module Harvest
   module Api
@@ -26,6 +27,10 @@ module Harvest
 
       def accounts
         Api::Resources::Accounts.new(access_token: harvest_access_token)
+      end
+
+      def clients
+        Api::Resources::Clients.new(access_token: harvest_access_token)
       end
 
       protected

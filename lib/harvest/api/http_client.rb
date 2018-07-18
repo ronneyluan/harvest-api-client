@@ -32,7 +32,7 @@ module Harvest
       def handle_response(response)
         case response.code
         when 200..201
-          JSON.parse(response.body)
+          response.body ? JSON.parse(response.body) : response.code
         when 403
           raise ERRORS_NAMESPACE::UnauthorizedError.new(response.code,
             "The object you requested was found but you don’t have authorization to perform this request.")

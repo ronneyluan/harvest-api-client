@@ -43,6 +43,18 @@ module Harvest
           block ? block.call(parsed_response) : parsed_response
         end
 
+        def patch(path, params: {}, &block)
+          response = perform_request(:patch, path, options: { body: params })
+          parsed_response = handle_response(response)
+          block ? block.call(parsed_response) : parsed_response
+        end
+
+        def delete(path, &block)
+          response = perform_request(:delete, path)
+          parsed_response = handle_response(response)
+          block ? block.call(parsed_response) : parsed_response
+        end
+
         def where(**query_options)
           @options[:query].merge!(query_options)
           self

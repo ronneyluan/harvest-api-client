@@ -32,7 +32,7 @@ RSpec.describe Harvest::Api::Resources::Projects do
 
     it "returns a Hash as response" do
       VCR.use_cassette("projects/found") do
-        project = subject.find('17505036')
+        project = subject.find(id)
         expect(project).to be_kind_of(Hash)
       end
     end
