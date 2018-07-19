@@ -15,6 +15,10 @@ module Harvest
     module Client
       TIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
 
+      def accounts
+        Api::Resources::Accounts.new(access_token: harvest_access_token)
+      end
+
       def users
         Api::Resources::Users.new(access_token: harvest_access_token,
           account_id: harvest_account_id)
@@ -25,12 +29,14 @@ module Harvest
           account_id: harvest_account_id)
       end
 
-      def accounts
-        Api::Resources::Accounts.new(access_token: harvest_access_token)
+      def clients
+        Api::Resources::Clients.new(access_token: harvest_access_token,
+          account_id: harvest_account_id)
       end
 
-      def clients
-        Api::Resources::Clients.new(access_token: harvest_access_token)
+      def projects
+        Api::Resources::Projects.new(access_token: harvest_access_token,
+          account_id: harvest_account_id)
       end
 
       protected

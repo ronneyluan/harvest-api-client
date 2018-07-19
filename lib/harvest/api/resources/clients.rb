@@ -3,6 +3,7 @@ module Harvest
     module Resources
       class Clients < Base
         CLIENTS_PATH = '/clients'
+        CLIENT_PARAMS = %i(name is_active address currency)
 
         def all(page: 1, per_page: 100)
           @options[:query].merge!({ page: page, per_page: per_page })
@@ -17,11 +18,11 @@ module Harvest
         end
 
         def create(params: {})
-          post(CLIENTS_PATH, params: params)
+          post(CLIENTS_PATH, params: params.slice(*CLIENT_PARAMS))
         end
 
         def update(id, params: {})
-          patch("#{CLIENTS_PATH}/#{id}", params: params)
+          patch("#{CLIENTS_PATH}/#{id}", params: params.slice(*CLIENT_PARAMS))
         end
 
         def destroy(id)
